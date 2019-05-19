@@ -1,7 +1,7 @@
 # OpenSC-Things
 
 ## Format the HSM
-pkcs15-init -E
+'pkcs15-init -E'
 
 ## Recreate Structure and Security PIN
 pkcs15-init -C --pin 11111111 --puk 22222222 -p pkcs15+onepin
