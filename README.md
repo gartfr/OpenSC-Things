@@ -46,3 +46,15 @@ Will give you a result to be stored to your /.ssh/authorized_keys
 
 ## You can use it to connect your prefered server
 `ssh -I /usr/lib/x86_64-linux-gnu/onepin-opensc-pkcs11.so joe@server.prefered.com`
+
+
+## Play with non Cetificate Objects
+## Add a Truecrypt or Keepass KeyFile
+pkcs11-tool --login --write-object key.tc --type data --id 2 --label 'key.tc' --private
+pkcs11-tool --login --write-object keepass.key --type data --id 3 --label 'keepass.key' --private
+
+## Read an Object to verify
+pkcs11-tool --login --read-object --type data --label 'keepass.key'
+
+## Read an Object with no Label
+pkcs11-tool --login --read-object --type data --label ''
