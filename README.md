@@ -16,7 +16,7 @@
 ## Generate a new Private Key on the token
 `pkcs15-init --generate-key rsa/2048 --auth-id 01`
 
-## Identify you Private Key ID and Serial (to work with OpenSSL)
+## Identify your Private Key ID and Serial (to work with OpenSSL)
 `p11tool --list-all pkcs11:model=PKCS%2315`
 (model=ePass2003)
 
