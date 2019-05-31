@@ -51,6 +51,7 @@ Will give you a result to be stored to your /.ssh/authorized_keys
 ## Play with non Cetificate Objects
 ## Add a Truecrypt or Keepass KeyFile
 `pkcs11-tool --login --write-object key.tc --type data --id 2 --label 'key.tc' --private`
+
 `pkcs11-tool --login --write-object keepass.key --type data --id 3 --label 'keepass.key' --private`
 
 ## Read an Object to verify
