@@ -70,7 +70,7 @@ Will give you a result to be stored to your /.ssh/authorized_keys
 The parameter `-I` permits to play with hardware token.
 
 
-## Play with non Cetificate Objects
+## Play with non Certificate Objects
 ###### Add a Truecrypt or Keepass KeyFile
 ```
 pkcs11-tool --login --write-object key.tc --type data --id 2 --label 'key.tc' --private`
