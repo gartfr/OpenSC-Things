@@ -1,4 +1,4 @@
-# OpenSC-Things
+# OpenSC Things
 
 ## Initialize the token
 ###### Format the HSM
