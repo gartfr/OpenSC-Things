@@ -49,12 +49,12 @@ then,
 
 `req -engine pkcs11 -new -key 'pkcs11:serial=0325384116270713;id=%16%b5%2c%a5%de%84%9b%40%ef%92%21%8a%58%54%2f%0f%a4%e6%82%52;' -keyform engine -out /home/gart/smartcard.pem.csr -text`
 
-Generate the CSR
+Generate the CSR.
+Give this CSR to your CA, you will have a Certificate as a result, import the Certificate to the token
 
 ###### Store the certificate
 `pkcs15-init --store-certificate smartcard.pem.crt --auth-id 01 --format pem`
 
-Give this CSR to your CA, you will have a Certificate as a result, import the Certificate to the token
 
 ## Play with SSH auth
 ###### Extract the SSH Key from Token
