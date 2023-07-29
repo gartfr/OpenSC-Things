@@ -39,21 +39,57 @@ This will permit us to have a corresponding certificate based upon our private k
 (extract useful information from above)
 `pkcs11:serial=0325384116270713;id=%16%b5%2c%a5%de%84%9b%40%ef%92%21%8a%58%54%2f%0f%a4%e6%82%52;`
 
+###### Customize OpenSSL to use PKCS11 token
+create a config file :
+enginepkcs11.conf 
+```
+    openssl_conf = openssl_init
+
+    [openssl_init]
+    engines = engine_section
+
+    [engine_section]
+    pkcs11 = pkcs11_section
+
+    [pkcs11_section]
+    engine_id = pkcs11
+#    dynamic_path is not required if you have installed
+#    the appropriate pkcs11 engines to your openssl directory
+#    dynamic_path = /path/to/engine_pkcs11.{so|dylib}
+    MODULE_PATH = /usr/lib/aarch64-linux-gnu/pkcs11/opensc-pkcs11.so
+#    it is not recommended to use "debug" for production use
+#    INIT_ARGS = connector=http://127.0.0.1:12345 debug
+#    init = 0
+
+[ req ]
+distinguished_name = req_dn
+string_mask = utf8only
+utf8 = yes
+
+[ req_dn ]
+commonName = Common Name
+```
+
 ###### OpenSSL, Generate a CSR
-`engine dynamic -pre SO_PATH:/usr/lib/x86_64-linux-gnu/engines-1.1/pkcs11.so -pre ID:pkcs11 -pre LIST_ADD:1 -pre LOAD -pre MODULE_PATH:/usr/lib/x86_64-linux-gnu/pkcs11/opensc-pkcs11.so`
+<!-- `engine dynamic -pre SO_PATH:/usr/lib/x86_64-linux-gnu/engines-1.1/pkcs11.so -pre ID:pkcs11 -pre LIST_ADD:1 -pre LOAD -pre MODULE_PATH:/usr/lib/x86_64-linux-gnu/pkcs11/opensc-pkcs11.so`
 (working on Ubuntu 18.04)
 
 This will initialize OpenSSL variable to access the device
 
 then, 
 
-`req -engine pkcs11 -new -key 'pkcs11:serial=0325384116270713;id=%16%b5%2c%a5%de%84%9b%40%ef%92%21%8a%58%54%2f%0f%a4%e6%82%52;' -keyform engine -out /home/gart/smartcard.pem.csr -text`
+`req -engine pkcs11 -new -key 'pkcs11:serial=0325384116270713;id=%16%b5%2c%a5%de%84%9b%40%ef%92%21%8a%58%54%2f%0f%a4%e6%82%52;' -keyform engine -out /home/gart/smartcard.pem.csr -text` -->
+
+`OPENSSL_CONF=enginepkcs11.conf openssl req -new -engine pkcs11 -key 'pkcs11:serial=0325384116270713;id=%16%B5%2C%A5%DE%84%9B%40%EF%92%21%8A%58%54%2F%0F%A4%E6%82%52;' -keyform engine -out ~/smartcard.pem.csr -text`
 
 Generate the CSR.
 Give this CSR to your CA, you will have a Certificate as a result, import the Certificate to the token
 
 ###### Store the certificate
 `pkcs15-init --store-certificate smartcard.pem.crt --auth-id 01 --format pem`
+
+###### Update a certificate
+`pkcs15-init -X smartcard.crt --format pem --id 00c3b2d268a75fad5b23f5da5198bac956ef311a -a 01`
 
 
 ## Play with SSH auth
