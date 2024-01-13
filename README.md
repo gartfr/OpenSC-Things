@@ -105,6 +105,13 @@ Will give you a result to be stored to your /.ssh/authorized_keys
 
 The parameter `-I` permits to play with hardware token.
 
+###### Add the feature for users forever
+`sudo vim /etc/ssh/ssh_config.d/pkcs-provider.conf`
+```
+PKCS11Provider /usr/lib/aarch64-linux-gnu/pkcs11/opensc-pkcs11.so
+```
+Adapt the path regarding your Linux distrib
+
 
 ## Play with non Certificate Objects
 ###### Add a Truecrypt or Keepass KeyFile
